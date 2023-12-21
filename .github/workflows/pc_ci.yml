@@ -94,8 +94,10 @@ jobs:
         gradle
     - name: Cleanup PC extesion zip file
       run: |
+        mkdir release_dist
         cd dist
         mv *.zip pc.zip
+        cp pc.zip ../release_dist/pickled-canary-${{ env.GHIDRA_LABEL }}
         unzip pc.zip
         rm -rf pc.zip ${{ github.event.repository.name }}/.github
     - name: Archive PC extension zip file
@@ -103,3 +105,9 @@ jobs:
       with:
         name: pickled_canary-${{ env.GHIDRA_LABEL }}
         path: dist
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          release_dist/*.zip
+            
