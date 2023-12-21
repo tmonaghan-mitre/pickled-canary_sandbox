@@ -70,6 +70,12 @@ jobs:
       GHIDRA_LABEL: ${{ matrix.GHIDRA_VERSION }}_${{ matrix.GHIDRA_BUILD_DATE }}
     steps:
     - uses: actions/checkout@v3
+    - uses: rickstaa/action-create-tag@v1
+      id: "tag_create"
+      with:
+        tag: "latest_${{ env.GHIDRA_LABEL }}"
+        tag_exists_error: false
+        message: "Latest release ${{ env.GHIDRA_LABEL }}"
 
     - name: Get latest Ghidra version
       env:
